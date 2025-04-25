@@ -21,7 +21,7 @@ For instance, you can pass your ssh keys inside the container to allow `git` to 
 It is recommended to mount a volume to `/home/ubuntu/tests/` and `/home/ubuntu/.m2` to save execution time (prevents full git clone and Maven dependency download).
 
 ```bash
-docker run -it --rm --name playwright-vnc-container -p 5999:5999 -p 6081:6081 \
+docker run -it --rm --name playwright-vnc-container -p 6081:6081 \
 -e REPO_URL='<git-repo-url>' \
 -e BRANCH_NAME='<branch-name>' \
 -e GIT_SUB_DIR='<dir-in-repo/subdir/>' \
@@ -30,7 +30,7 @@ docker run -it --rm --name playwright-vnc-container -p 5999:5999 -p 6081:6081 \
 -v './ssh-mount-files/known_hosts:/home/ubuntu/ssh-mnt/known_hosts' \
 -v '<path-to-maven-settings>/settings.xml:/opt/maven/conf/settings.xml' \
 -v '<local-git-repo-containing-tests>:/home/ubuntu/tests/' \
--v '</home/goetz/.m2-tmp/>:/home/ubuntu/.m2/' \
+-v '</path/to/.m2/>:/home/ubuntu/.m2/' \
 playwright-vnc
 ```
 
