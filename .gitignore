@@ -1,0 +1,6 @@
+.idea
+ssh-mount-files/id_rsa
+ssh-mount-files/id_rsa.pub
+ssh-mount-files/known_hosts
+custom-image
+README_INTERNAL.md
