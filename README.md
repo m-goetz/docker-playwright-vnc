@@ -8,15 +8,29 @@ The aim is to provide a way to execute e2e tests inside a container environment 
 
 ## Build and run the image
 
-Clone this repository and execute:
+### Quickstart
+
+Clone this repository and build the image:
 
 ```bash
 docker build --no-cache --progress=plain -t playwright-vnc .
 ```
 
-To run the image, you can pass the following options to the `docker run` command.
+Run the image with a sample test project (https://github.com/m-goetz/playwright-java-demo.git).
 
-For instance, you can pass your ssh keys inside the container to allow `git` to clone the repository. Make sure that the mounted ssh files are readable to the `ubuntu` user inside the container. You can also mount your Maven `settings.xml` to be used for the test run. 
+```bash
+docker run -it --rm --name playwright-vnc-container -p 6081:6081 \
+-e REPO_URL='https://github.com/m-goetz/playwright-java-demo.git' \
+-e BRANCH_NAME='master' \
+-e GIT_SUB_DIR='' \
+playwright-vnc
+```
+
+Navigate to http://localhost:6081/ and watch a browser inside a browser executing playwright "tests" (don't expect too much from this demo, it just switches between websites...). It may take some seconds for the tests to start (because of the dependency resolution).
+
+### More settings
+
+The following example shows more settings for the image. For instance, you can pass your ssh keys inside the container to allow `git` to clone the repository. Make sure that the mounted ssh files are readable to the `ubuntu (1000)` user inside the container. You can also mount your Maven `settings.xml` to be used for the test run. 
 
 It is recommended to mount a volume to `/home/ubuntu/tests/` and `/home/ubuntu/.m2` to save execution time (prevents full git clone and Maven dependency download).
 
@@ -33,5 +47,3 @@ docker run -it --rm --name playwright-vnc-container -p 6081:6081 \
 -v '</path/to/.m2/>:/home/ubuntu/.m2/' \
 playwright-vnc
 ```
-
-After that, you should be able to connect to noVNC: http://localhost:6081/. 
